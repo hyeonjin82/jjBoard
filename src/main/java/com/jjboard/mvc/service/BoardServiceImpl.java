@@ -10,7 +10,7 @@ import com.jjboard.mvc.dao.BoardDao;
 import com.jjboard.mvc.domain.Board;
 
 @Service
-public class BoardServiceImpl  implements BoardService{
+public class BoardServiceImpl implements BoardService {
 	@Resource
 	private BoardDao boardDao;
 
@@ -29,22 +29,31 @@ public class BoardServiceImpl  implements BoardService{
 
 	@Override
 	public boolean delete(Board board) {
+		Board vo = boardDao.findOne(board.getSeq());
+
+		if (vo.getPassword() == board.getPassword()) {
+			boardDao.delete(board);
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public Board edit(Board board) {
-		return null;
+		return boardDao.save(board);
 	}
 
 	@Override
 	public Board write(Board board) {
-		return null;
+		return boardDao.save(board);
 	}
 
 	@Override
 	public Board read(int seq) {
-		return null;
+		Board board = boardDao.findOne(seq);
+		board.setCnt(board.getCnt() + 1);
+		boardDao.save(board);
+		return board;
 	}
 
 }

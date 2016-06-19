@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="EUC-KR"></meta>
+<title> Board List </title>
+</head>
+<body>
+	<table>
+		<tr>
+			<th>No</th>
+			<th>Title</th>
+			<th>Writer</th>
+			<th>Reg Date</th>
+			<th>Cnt</th>
+		</tr>
+		<tr th:each="board : ${boardList}">
+			<td th:text="${board.seq}">1</td>
+			<td><a href="" th:href="@{/board/read/${board.seq}}" th:text="${board.title">Title</a></td>
+			<td th:text="${board.writer}">Jin</td>
+			<td th:text="${board.regDate}">2016-07-01</td>
+			<td th:text="${board.cnt}">10</td>
+		</tr>
+	</table>
+	<a href="" th:href="@{/board/write}">New</a>
+</body>
+</html>

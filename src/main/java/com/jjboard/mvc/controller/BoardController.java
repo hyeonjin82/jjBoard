@@ -16,6 +16,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.jjboard.mvc.domain.Board;
 import com.jjboard.mvc.service.BoardService;
 
+import scala.annotation.varargs;
+
 @Controller
 @SessionAttributes("board")
 public class BoardController {
@@ -31,6 +33,12 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 	
+	@RequestMapping(value="/")
+	public String delist(Model model) {
+		model.addAttribute("boardList", boardService.list());
+		return "/board/list";
+	}
+	
 	@RequestMapping(value="/board/list")
 	public String list(Model model) {
 		model.addAttribute("boardList", boardService.list());
@@ -39,13 +47,13 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/read/{seq}")
 		public String read(Model model, @PathVariable int seq) {
-			model.addAttribute("Board", boardService.read(seq));
+			model.addAttribute("board", boardService.read(seq));
 			return "/board/read";
 		}
 	
 		@RequestMapping(value = "/board/write", method = RequestMethod.GET)
 		public String write(Model model) {
-			model.addAttribute("Board", new Board());
+			model.addAttribute("board", new Board());
 			return "/board/write";
 		}
 	
@@ -78,7 +86,7 @@ public class BoardController {
 					return "redirect:/board/list";
 				}
 	
-				model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+				model.addAttribute("msg", "not match the password.");
 				return "/board/edit";
 			}
 		}
@@ -91,15 +99,15 @@ public class BoardController {
 	
 		@RequestMapping(value = "/board/delete", method = RequestMethod.POST)
 		public String delete(int seq, int pwd, Model model) {
-			Board Board = new Board();
-			Board.setSeq(seq);
-			Board.setPassword(pwd);
+			Board board = new Board();
+			board.setSeq(seq);
+			board.setPassword(pwd);
 	
-			boolean deleted = boardService.delete(Board);
+			boolean deleted = boardService.delete(board);
 	
 			if (deleted == false) {
 				model.addAttribute("seq", seq);
-				model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+				model.addAttribute("msg", "not match the password.");
 				return "/board/delete";
 			} else {
 				return "redirect:/board/list";

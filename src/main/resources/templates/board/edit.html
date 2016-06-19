@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Board Edit</title>
+<script>
+	function submit() {
+		var pass = document.getElementById("myPsw").size;
+		alert("pwd");
+	}
+</script>
+</head>
+<body>
+	<form th:action="@{/board/edit}" method="post">
+		<table border="1">
+			<tr>
+				<th><label for="title">Title</label></th>
+				<td><input name="title" value="title" th:value="${board.title}" /></td>
+			</tr>
+			<tr>
+				<th><label for="content">Content</label></th>
+				<td><input name="content" th:value="${board.content}" /></td>
+			</tr>
+			<tr>
+				<th><label for="writer">Writer</label></th>
+				<td><input name="writer" th:value="${board.writer}" /></td>
+			</tr>
+			<tr>
+				<th><label for="password">Password</label></th>
+				<td><input type="password" name="pwd" required="required" /><span th:text="${msg}"></span></td>
+			</tr>
+		</table>
+		<div>
+			<input type="submit" value="Add" /> <a href="list.html"
+				th:href="@{/board/list}">List</a>
+		</div>
+	</form>
+</body>
+</html>

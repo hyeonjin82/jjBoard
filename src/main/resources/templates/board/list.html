@@ -15,7 +15,7 @@
 		</tr>
 		<tr th:each="board : ${boardList}">
 			<td th:text="${board.seq}">1</td>
-			<td><a href="" th:href="@{/board/read/${board.seq}}" th:text="${board.title">Title</a></td>
+			<td><a href="" th:href="@{/board/read/${board.seq}}" th:text="${board.title}">Title</a></td>
 			<td th:text="${board.writer}">Jin</td>
 			<td th:text="${board.regDate}">2016-07-01</td>
 			<td th:text="${board.cnt}">10</td>
